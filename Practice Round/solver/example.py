@@ -33,13 +33,13 @@ class Solver(BaseSolver):
         solver.Init(values, weights, [maxweight])
         computed_value = solver.Solve()
 
-        packed_weights = []
+        packed_items = []
         total_weight = 0
         for i in range(len(values)):
             if solver.BestSolutionContains(i):
-                packed_weights.append(weights[0][i])
+                packed_items.append(i)
                 total_weight += weights[0][i]
         assert computed_value == total_weight
         logging.debug("Total value: {}".format(computed_value))
-        logging.debug("Packed items: {}".format(packed_weights))
-        return total_weight, packed_weights
+        logging.debug("Packed items: {}".format(packed_items))
+        return total_weight, packed_items

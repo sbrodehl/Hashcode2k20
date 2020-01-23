@@ -32,13 +32,13 @@ def compute_score(file_in, file_out):
     # read input and output files
     input_ = parse_input(file_in)
     output_ = parse_output(file_out)
-    solution_score = np.sum(output_)
+    solution_score = np.sum([input_[1][idx] for idx in output_])
     score_ = Score()
     # check if solution appears in the order items are listed in the input
     i = s = 0
     while s < len(output_) and i < len(input_[1]):
         ip = input_[1][i]
-        sp = output_[s]
+        sp = input_[1][output_[s]]
         if ip == sp:
             i += 1
             s += 1
