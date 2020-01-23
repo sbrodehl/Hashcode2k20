@@ -1,7 +1,5 @@
 import logging
-import sys
-import resource
-from functools import lru_cache
+from ortools.algorithms import pywrapknapsack_solver
 from .basesolver import BaseSolver
 
 
@@ -25,47 +23,23 @@ class Solver(BaseSolver):
         return True
 
     @staticmethod
-    def knapsack(items, maxweight):
-        """Solve the knapsack problem by finding the most valuable subsequence
-        of items that weighs no more than maxweight.
+    def knapsack(values, maxweight):
+        solver = pywrapknapsack_solver.KnapsackSolver(
+            pywrapknapsack_solver.KnapsackSolver.KNAPSACK_MULTIDIMENSION_BRANCH_AND_BOUND_SOLVER,
+            'Knapsack')
 
-        Taken from https://codereview.stackexchange.com/a/20581
+        weights = [values]
 
-        items must be a sequence of values, where value is a non-negative integer.
+        solver.Init(values, weights, [maxweight])
+        computed_value = solver.Solve()
 
-        maxweight is a non-negative integer.
-
-        Return a pair whose first element is the sum of values in the most
-        valuable subsequence, and whose second element is the subsequence.
-
-        >>> items = [4, 2, 6, 1, 2]
-        >>> knapsack(items, 15)
-        (15, [4, 2, 6, 1, 2])
-
-        """
-        print("sys.getrecursionlimit: {}".format(sys.getrecursionlimit()))
-        resource.setrlimit(resource.RLIMIT_STACK, (2**29,-1))
-        sys.setrecursionlimit(10**6)
-        print("sys.getrecursionlimit: {}".format(sys.getrecursionlimit()))
-
-        @lru_cache(maxsize=None)
-        def bestvalue(i, j):
-            # Return the value of the most valuable subsequence of the first
-            # i elements in items whose weights sum to no more than j.
-            if j < 0:
-                return float('-inf')
-            if i == 0:
-                return 0
-            value = items[i - 1]
-            return max(bestvalue(i - 1, j), bestvalue(i - 1, j - value) + value)
-
-        j = maxweight
-        result = []
-        for i in reversed(range(len(items))):
-            if bestvalue(i + 1, j) != bestvalue(i, j):
-                result.append(items[i])
-                j -= items[i]
-        result.reverse()
-        ret = bestvalue(len(items), maxweight), result
-        logging.debug(bestvalue.cache_info())
-        return ret
+        packed_weights = []
+        total_weight = 0
+        for i in range(len(values)):
+            if solver.BestSolutionContains(i):
+                packed_weights.append(weights[0][i])
+                total_weight += weights[0][i]
+        assert computed_value == total_weight
+        logging.debug("Total value: {}".format(computed_value))
+        logging.debug("Packed items: {}".format(packed_weights))
+        return total_weight, packed_weights
