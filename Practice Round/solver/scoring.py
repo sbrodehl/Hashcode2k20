@@ -32,9 +32,24 @@ def compute_score(file_in, file_out):
     # read input and output files
     input_ = parse_input(file_in)
     output_ = parse_output(file_out)
-
-    s = Score()
-    return s
+    solution_score = np.sum(output_)
+    score_ = Score()
+    # check if solution appears in the order items are listed in the input
+    i = s = 0
+    while s < len(output_) and i < len(input_[1]):
+        ip = input_[1][i]
+        sp = output_[s]
+        if ip == sp:
+            i += 1
+            s += 1
+            score_.add(sp)
+        else:
+            i += 1
+    assert score_.total() == solution_score, "Solution and score do not match" \
+                                             " (expected:{}, found:{})".format(solution_score, score_.total())
+    assert score_.total() <= input_[0], "Maximum number is reached " \
+                                        "(expected:{}, found:{}).".format(input_[0], score_.total())
+    return score_
 
 
 if __name__ == '__main__':
