@@ -27,13 +27,13 @@ See the [README.md](Practice%20Round/README.md) for a full walkthrough of the pr
 > You estimated the maximum number of pizza slices that you want to order for your hub based on the number of registered participants.
 > In order to reduce food waste, your goal is to order as many pizza slices as possible, but not more than the maximum number.
 >
-> _from [Problem statement for the Practice Round of Hash Code 2020](practice_problem.pdf)_
+> _from [Problem statement for the Practice Round of Hash Code 2020](Practice%20Round/practice_problem.pdf)_
 
 #### Task
 
 > Your goal is to order as many pizza slices as possible, but not more than the maximum number.
 >
-> _from [Problem statement for the Practice Round of Hash Code 2020](practice_problem.pdf)_
+> _from [Problem statement for the Practice Round of Hash Code 2020](Practice%20Round/practice_problem.pdf)_
 
 
 ## Online Qualification Round
