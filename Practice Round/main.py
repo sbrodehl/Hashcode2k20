@@ -24,7 +24,9 @@ if __name__ == '__main__':
     solver = solver.Solver(args.input)
 
     # solve the problem with given input
-    solver.solve()
+    success = solver.solve()
+    if not success:
+        raise RuntimeError("No solution found!")
 
     # maybe create a solution file
     if args.output:
