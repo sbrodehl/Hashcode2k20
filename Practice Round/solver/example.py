@@ -1,6 +1,8 @@
-from .basesolver import BaseSolver
-from functools import lru_cache
 import logging
+import sys
+import resource
+from functools import lru_cache
+from .basesolver import BaseSolver
 
 
 class Solver(BaseSolver):
@@ -41,6 +43,11 @@ class Solver(BaseSolver):
         (15, [4, 2, 6, 1, 2])
 
         """
+        print("sys.getrecursionlimit: {}".format(sys.getrecursionlimit()))
+        resource.setrlimit(resource.RLIMIT_STACK, (2**29,-1))
+        sys.setrecursionlimit(10**6)
+        print("sys.getrecursionlimit: {}".format(sys.getrecursionlimit()))
+
         @lru_cache(maxsize=None)
         def bestvalue(i, j):
             # Return the value of the most valuable subsequence of the first
