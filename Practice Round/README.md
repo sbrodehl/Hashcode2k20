@@ -6,18 +6,23 @@ The problem statement can be found [here](practice_problem.pdf).
 The input files can be found in `input/`
 - [example](input/a_example.in)  
     * Pizza types: `4`
+    * Slices per type: `5.25` ± `2.17`
     * Slices to order: `17`
 - [small](input/b_small.in)  
     * Pizza types: `10`
+    * Slices per type: `42.00` ± `33.25`
     * Slices to order: `100`
 - [medium](input/c_medium.in)  
     * Pizza types: `50`
+    * Slices per type: `94.38` ± `59.41`
     * Slices to order: `4,500`
 - [quite big](input/d_quite_big.in)  
     * Pizza types: `2,000`
+    * Slices per type: `504,916.60` ± `288,099.66`
     * Slices to order: `1,000,000,000`
 - [also big](input/e_also_big.in)  
     * Pizza types: `10,000`
+    * Slices per type: `75,396.84` ± `43,144.36`
     * Slices to order: `505,000,000`
 
 #### Introduction
@@ -57,6 +62,7 @@ Overall **1,505,004,616** points.
 #### A – example
 
 * Pizza types: `4`
+* Slices per type: `5.25` ± `2.17`
 * Slices to order: `17`
 
 _`16`_ points
@@ -64,6 +70,7 @@ _`16`_ points
 #### B – small
 
 * Pizza types: `10`
+* Slices per type: `42.00` ± `33.25`
 * Slices to order: `100`
 
 _`100`_ points
@@ -71,6 +78,7 @@ _`100`_ points
 #### C – medium
 
 * Pizza types: `50`
+* Slices per type: `94.38` ± `59.41`
 * Slices to order: `4,500`
 
 _`4,500`_ points
@@ -78,6 +86,7 @@ _`4,500`_ points
 #### D – quite big
 
 * Pizza types: `2,000`
+* Slices per type: `504,916.60` ± `288,099.66`
 * Slices to order: `1,000,000,000`
 
 _`1,000,000,000`_ points
@@ -85,6 +94,7 @@ _`1,000,000,000`_ points
 #### E – also big
 
 * Pizza types: `10,000`
+* Slices per type: `75,396.84` ± `43,144.36`
 * Slices to order: `505,000,000`
 
 _`505,000,000`_ points 
