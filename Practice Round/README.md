@@ -12,13 +12,13 @@ The input files can be found in `input/`
     * Slices to order: `100`
 - [medium](input/c_medium.in)  
     * Pizza types: `50`
-    * Slices to order: `4500`
+    * Slices to order: `4,500`
 - [quite big](input/d_quite_big.in)  
-    * Pizza types: `2000`
-    * Slices to order: `1000000000`
+    * Pizza types: `2,000`
+    * Slices to order: `1,000,000,000`
 - [also big](input/e_also_big.in)  
-    * Pizza types: `10000`
-    * Slices to order: `505000000`
+    * Pizza types: `10,000`
+    * Slices to order: `505,000,000`
 
 #### Introduction
 
@@ -48,8 +48,43 @@ See the section on scoring in the [Problem statement for the Practice Round of H
 
 ## Algorithm
 
-tba.
+It's a basic [knapsack problem](https://developers.google.com/optimization/bin/knapsack).
 
 ## Scores
 
-tba.
+Overall **1,505,004,616** points.
+
+#### A – example
+
+* Pizza types: `4`
+* Slices to order: `17`
+
+_`16`_ points
+
+#### B – small
+
+* Pizza types: `10`
+* Slices to order: `100`
+
+_`100`_ points
+
+#### C – medium
+
+* Pizza types: `50`
+* Slices to order: `4,500`
+
+_`4,500`_ points
+
+#### D – quite big
+
+* Pizza types: `2,000`
+* Slices to order: `1,000,000,000`
+
+_`1,000,000,000`_ points
+
+#### E – also big
+
+* Pizza types: `10,000`
+* Slices to order: `505,000,000`
+
+_`505,000,000`_ points 
