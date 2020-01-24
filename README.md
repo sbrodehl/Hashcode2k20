@@ -13,8 +13,9 @@ Solutions and code for the [Google \# Hash Code 2020](https://codingcompetitions
 
 ### More Pizza
 
-The problem statement can be found [here](Practice%20Round/practice_problem.pdf).
+The problem statement can be found [here](Practice%20Round/practice_problem.pdf).  
 Our solution is in the [Practice Round folder](Practice%20Round).
+
 See the [README.md](Practice%20Round/README.md) for a full walkthrough of the problem.
 
 #### Introduction
@@ -42,7 +43,7 @@ tba.
 
 ## Getting Started
 
-The current version requires the following libraries.
+The current version requires libraries.  
 See [requirements.txt](requirements.txt) for the full list of requirements.
 
 The easiest way to install those dependencies is by using the [requirements.txt](requirements.txt) file with `pip3`.
