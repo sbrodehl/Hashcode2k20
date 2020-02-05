@@ -3,6 +3,8 @@
 Solutions and code for the Practice Round of [Hash Code 2020](https://codingcompetitions.withgoogle.com/hashcode) **"More Pizza"**.  
 The problem statement can be found [here](practice_problem.pdf).
 
+![Hash Code 2020 Practice Round Teaser](practice_problem_teaser.png)
+
 The input files can be found in `input/`
 - [example](input/a_example.in)  
     * Pizza types: `4`
