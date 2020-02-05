@@ -57,6 +57,15 @@ See the section on scoring in the [Problem statement for the Practice Round of H
 
 It's a basic [knapsack problem](https://developers.google.com/optimization/bin/knapsack).
 
+> In the knapsack problem, you need to pack a set of items, with given values and sizes (such as weights or volumes), into a container with a maximum capacity. If the total size of the items exceeds the capacity, you can't pack them all. In that case, the problem is to choose a subset of the items of maximum total value that will fit in the container.
+>
+> _from [Google OR-Tools - The Knapsack Problem](https://developers.google.com/optimization/bin/knapsack)_  
+
+A brute force or dynamic programming approach to this knapsack problem is not sufficient, because the input sizes for **D** and **E** are quite big.
+We use a branch and bound method to handle those cases as well.
+
+[Google OR-Tools](https://developers.google.com/optimization/bin/knapsack) provide an implementation for all of this, so the [solution](solver/example.py) is quite short.  
+
 ## Scores
 
 Overall **1,505,004,616** points.
