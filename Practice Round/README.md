@@ -64,7 +64,7 @@ It's a basic [knapsack problem](https://developers.google.com/optimization/bin/k
 A brute force or dynamic programming approach to this knapsack problem is not sufficient, because the input sizes for **D** and **E** are quite big.
 We use a branch and bound method to handle those cases as well.
 
-[Google OR-Tools](https://developers.google.com/optimization/bin/knapsack) provide an implementation for all of this, so the [solution](solver/example.py) is quite short.  
+[Google OR-Tools](https://developers.google.com/optimization/bin/knapsack) provide an implementation for all of this, so the [solution](solver/example.py#L26) is quite short.  
 
 ## Scores
 
