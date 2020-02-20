@@ -1,12 +1,9 @@
 # \# Hash Code 2020 Online Qualification Round
 
-Solutions and code for the Online Qualification Round of [Hash Code 2020](https://codingcompetitions.withgoogle.com/hashcode) **"tba"**.  
+Solutions and code for the Online Qualification Round of [Hash Code 2020](https://codingcompetitions.withgoogle.com/hashcode) **"Book Scanning"**.  
 The problem statement can be found [here](hashcode_2020_online_qualification_round.pdf).
 
-![Hash Code 2020 Online Qualification Round Teaser]()
-
-The input files can be found in `input/`
-- [example](input/a_example.in)  
+![Hash Code 2020 Online Qualification Round Teaser](online_qualification_round_teaser.png)
 
 #### Introduction
 
@@ -32,6 +29,21 @@ The input files can be found in `input/`
 >
 > _from [Problem statement for the Online Qualification Round of Hash Code 2020](hashcode_2020_online_qualification_round.pdf)_
 
+#### Input
+
+The input files can be found in `input/`
+
+- [example](input/a.txt)
+
+- [read on](input/b.txt)
+  
+- [incunabula](input/c.txt)
+  
+- [tough choices](input/d.txt)
+  
+- [so many books](input/e.txt)
+  
+- [libraries of the world](input/f.txt)
 
 #### Scoring
 
@@ -43,8 +55,28 @@ tba
 
 ## Scores
 
-tba
+Overall **26,644,116** points (681. place).
 
 #### A – example
 
-tba
+21 points
+
+#### B – read on
+
+5,822,900 points
+
+#### C – incunabula
+
+5,645,747 points
+
+#### D – tough choices
+
+4,836,325 points
+
+####  E – so many books
+
+5,142,363 points
+
+#### F – libraries of the world
+
+5,196,760 points
