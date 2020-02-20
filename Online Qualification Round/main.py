@@ -3,7 +3,7 @@ if __name__ == '__main__':
     import argparse
     import logging
 
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.INFO)
 
     parser = argparse.ArgumentParser()
 
