@@ -11,8 +11,12 @@ class Score(object):
     def total(self):
         return np.array(self.scores).sum()
 
-    def add(self, interest_factor):
-        self.scores.append(interest_factor)
+    def add(self, other):
+        self.scores.append(other)
+
+    def __add__(self, other):
+        self.scores.append(other)
+        return self
 
 
 def set_log_level(args):
@@ -30,10 +34,42 @@ def compute_score(file_in, file_out):
     :return: Score
     """
     # read input and output files
-    input_ = parse_input(file_in)
-    output_ = parse_output(file_out)
+    problem = parse_input(file_in)
+    solution = parse_output(file_out)
     score_ = Score()
-    # tba
+    # helper variables
+    _is_book_scanned = [0] * problem['num_books']
+    _lib_is_signed_up = [False] * problem['num_libs']
+    _lib_scan_index = [0] * problem['num_libs']
+    _signup_proc_running = 0
+    _signup_proc_time_left = 0
+    current_day = 0
+    while current_day < problem['num_days']:
+        for libidx, books in solution:
+            # scan books if signed up
+            if _lib_is_signed_up[libidx]:
+                # get the current book ids to be scanned
+                scanning_books = books[_lib_scan_index[libidx]:
+                                       _lib_scan_index[libidx] + problem['libs'][libidx]['books_per_day']]
+
+                for b in scanning_books:
+                    if not _is_book_scanned[b]:
+                        score_ += problem['book_worth'][b]
+                        _is_book_scanned[b] = True
+                _lib_scan_index[libidx] += problem['libs'][libidx]['books_per_day']
+            else:
+                if not _signup_proc_running:
+                    # let's sign up that lib
+                    _signup_proc_running = libidx
+                    _signup_proc_time_left = problem['libs'][libidx]['signup_time']
+        # advance day
+        current_day += 1
+        _signup_proc_time_left -= 1
+        if not _signup_proc_time_left:
+            # reset signup process if time evolved
+            _lib_is_signed_up[_signup_proc_running] = True
+            _signup_proc_running = 0
+
     return score_
 
 
