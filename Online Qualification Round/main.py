@@ -1,6 +1,9 @@
 if __name__ == '__main__':
     import importlib
     import argparse
+    import logging
+
+    logging.basicConfig(level=logging.DEBUG)
 
     parser = argparse.ArgumentParser()
 
