@@ -44,7 +44,7 @@ class Solver(BaseSolver):
         """
         libraries = self.data["libs"]
         for lib in libraries:
-            lib["wpd_arr"]=self.wpd_lib(lib)
+            #lib["wpd_arr"]=self.wpd_lib(lib)
             lib["WPD"]=self.lib_worth(lib)
         #libraries = list(sorted(libraries, key=lambda l: self.lib_worth(l), reverse=True))
         lib = libraries
@@ -59,33 +59,25 @@ class Solver(BaseSolver):
         used_libs = set()
         days_spend = 0
         while days_spend < self.data['num_days']:
-            if not libraries:
-                break
+            if len(libraries)==0:
+                return True
             days_left = self.data['num_days'] - days_spend
 
-            cur_ind = -1
-            for i in range(len(libraries)):
-                if not i in used_libs:
-                    if cur_ind==-1:
-                        cur_ind=i
-                    else:
-                        if libraries[cur_ind]["wpd_arr"][days_left]*libraries[i]["signup_time"]>libraries[i]["wpd_arr"][days_left]*libraries[cur_ind]["signup_time"]:
-                            cur_ind=i
-
-            if cur_ind==-1:
-                return True
-
-            lib = libraries[cur_ind]
-            used_libs.add(cur_ind)
+            lib = libraries.pop()
+            #used_libs.add(cur_ind)
             days_left -= lib['signup_time']
             if days_left < 0:
                 break
 
             books_left = [(self.data["book_worth"][b_id],b_id) for b_id in lib['books'] if b_id not in used_books]
             books_left = list(reversed(sorted(books_left)))
+            worth = sum(b[0] for b in books_left[:days_left * lib['books_per_day']])
+            if worth>=0:
 
-            books = [b[1] for b in books_left[:days_left * lib['books_per_day']]]
-            if len(books)!=0:
-                self.solution.append((lib['lib_id'], books))
-                days_spend += lib['signup_time']
+                books = [b[1] for b in books_left[:days_left * lib['books_per_day']]]
+                for b in books:
+                    used_books.add(b)
+                if len(books)!=0:
+                    self.solution.append((lib['lib_id'], books))
+                    days_spend += lib['signup_time']
         return True
