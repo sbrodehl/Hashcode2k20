@@ -39,7 +39,12 @@ See the [README.md](Practice%20Round/README.md) for a full walkthrough of the pr
 
 ## Online Qualification Round
 
-tba.
+### Book Scanning
+
+The problem statement can be found [here](Online%20Qualification%20Round/hashcode_2020_online_qualification_round.pdf).  
+Our solution is in the [Online Qualification Round folder](Online%20Qualification%20Round).
+
+See the [README.md](Online%20Qualification%20Round/README.md) for a full walkthrough of the problem.
 
 ## Getting Started
 
