@@ -11,13 +11,19 @@ def parse_input(file_in):
     input_items = []
     with open(file_in, 'r') as f:
         first_line = f.readline().strip()
-        # tba
-        for pid, line in enumerate(f.readlines()):
-            _split = line.strip().split(' ')
-            # tba
+        num_books,num_libs,num_days = [int(i) for i in first_line.split()]
+        book_worth = [int(i) for i in f.readline().split()]
+        libs = []
+        for lib_id in range(num_libs):
+            n_books,signup_time,books_per_day =  [int(i) for i in f.readline().split()]
+            books = set([int(i) for i in f.readline().split()])
+            libs.append([n_books,signup_time,books_per_day,books])
+
 
     logging.debug("parsing {}: done".format(file_in))
-    return None
+    return {"num_books":num_books,"num_libs":num_libs,
+            "num_days":num_days,"book_worth":book_worth,
+            "libs":libs}
 
 
 def parse_output(file_out):
