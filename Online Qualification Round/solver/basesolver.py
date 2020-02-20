@@ -1,5 +1,6 @@
 from .parsing import parse_input, write_output
 from .scoring import compute_score
+import logging
 
 
 class BaseSolver(object):
@@ -25,4 +26,6 @@ class BaseSolver(object):
     def write(self, output_str):
         write_output(output_str, self.solution)
         s = compute_score(self.input_str, output_str)
-        print("Score for {}: {} points".format(self.input_str, s.total()))
+        total = s.total()
+        s.total()
+        logging.info(f"Your submission ({self.input_str}) scored {total} points.")

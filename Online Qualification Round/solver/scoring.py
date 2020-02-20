@@ -91,5 +91,5 @@ if __name__ == '__main__':
     set_log_level(args)
 
     score = compute_score(args.file_in, args.file_out)
-
-    print("Score for {}: {} points".format(args.file_out, score.total()))
+    total = score.total()
+    logging.info(f"Your submission ({args.file_out}) scored {total} points.")
