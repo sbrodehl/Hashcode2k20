@@ -1,7 +1,7 @@
 from .basesolver import BaseSolver
 
 
-class GreedySolver(BaseSolver):
+class Solver(BaseSolver):
     """Solve the problem nice and steady!
     """
     def __init__(self, input_str):
