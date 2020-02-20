@@ -16,7 +16,8 @@ def parse_input(file_in):
         for lib_id in range(num_libs):
             n_books, signup_time, books_per_day = [int(i) for i in f.readline().split()]
             books = set([int(i) for i in f.readline().split()])
-            libs.append({"num_books": n_books,
+            libs.append({"lib_id": lib_id,
+                         "num_books": n_books,
                          "signup_time": signup_time,
                          "books_per_day": books_per_day,
                          "books": books})
