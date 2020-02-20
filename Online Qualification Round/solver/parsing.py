@@ -55,5 +55,5 @@ def write_output(file_out, solution):
         f.write(f"{len(solution)}\n")
         for library_id, books in solution:
             f.write(f"{library_id} {len(books)}\n")
-            f.write(" ".join(books) + "\n")
+            f.write(" ".join(str(b) for b in books) + "\n")
 
