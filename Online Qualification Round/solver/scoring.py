@@ -85,7 +85,7 @@ def compute_score(file_in, file_out):
     logging.info(f"\tLibrary signup took {_signup_proc_complete_stats:.2f} days on average.")
     logging.info(f"\tA total of {_total_scanned} books have been scanned.")
     _scanned_book_worths = [problem['book_worth'][idx] for idx, is_scanned in enumerate(_is_book_scanned) if is_scanned]
-    _scanned_book_avg_worth = sum(_scanned_book_worths) / _total_scanned
+    _scanned_book_avg_worth = sum(_scanned_book_worths) / len(_scanned_book_worths)
     logging.info(f"\t{sum(_is_book_scanned)} of those books were distinct with an average score of {_scanned_book_avg_worth:.2f}.")
     _scanned_books_perc = 100 * sum(_is_book_scanned) / problem['num_books']
     logging.info(f"\tThis is {_scanned_books_perc:.2f}% of the {problem['num_books']} books available across all libraries.")
