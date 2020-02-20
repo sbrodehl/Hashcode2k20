@@ -1,7 +1,7 @@
 from .basesolver import BaseSolver
 
 
-class GreedySolver(BaseSolver):
+class Solver(BaseSolver):
     """Solve the problem nice and steady!
     """
     def __init__(self, input_str):
@@ -14,11 +14,11 @@ class GreedySolver(BaseSolver):
         num_books_to_scan = (days_left - lib["signup_time"])*lib["books_per_day"]
         if num_books_to_scan<=0:
             return -1,set()
-        scores = [(worth,index) for index,worth in enumerate(book_worth) if index in books_left]
+        scores = [(worth,index) for index,worth in enumerate(self.data["book_worth"]) if index in books_left]
         scores.sort()
         scan_books = scores[-1*min(num_books_to_scan,len(scores)):]
-
-        return sum([i[0] for i in scan_books],set([i[1] for i in scan_books]))
+        #print(scan_books)
+        return sum([i[0] for i in scan_books]),set([i[1] for i in scan_books])
 
 
 
@@ -26,31 +26,38 @@ class GreedySolver(BaseSolver):
 
         result = []
 
-        days_left = seld.data["num_days"]
+        days_left = self.data["num_days"]
+        libs_used = set()
+        books_used = set()
 
         while days_left:
-            books_used = set()
 
-            libs_used = set()
+            best_lib=-1
             best_score = 0
             for lib in range(self.data["num_libs"]):
                 if lib in libs_used:
                     continue
                 score,books = self.get_worth(lib,days_left,books_used)
+                #print(lib,score,books)
                 if score>best_score:
                     best_score=score
                     best_lib = lib
-
-            result.append([best_lib,list(books)])
+                    best_books = books
+            #print(result)
+            if best_lib==-1:
+                self.solution = result
+                return True
+            result.append([best_lib,list(best_books)])
             days_left -= self.data["libs"][lib]["signup_time"]
             books_used.update(books)
             libs_used.add(best_lib)
+            #print(libs_used)
 
 
 
 
 
-
+        self.solution = result
 
 
         """Compute a solution to the given problem.
@@ -59,4 +66,4 @@ class GreedySolver(BaseSolver):
 
         :return: True, if a solution is found, False otherwise
         """
-        return result
+        return True
