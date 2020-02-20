@@ -40,9 +40,15 @@ class GreedySolver(BaseSolver):
                 if score>best_score:
                     best_score=score
                     best_lib = lib
-            days_left -= self.data["libs"][lib]["signup_time"]
 
-            result.append()
+            result.append([best_lib,list(books)])
+            days_left -= self.data["libs"][lib]["signup_time"]
+            books_used.update(books)
+            libs_used.add(best_lib)
+
+
+
+
 
 
 
@@ -53,4 +59,4 @@ class GreedySolver(BaseSolver):
 
         :return: True, if a solution is found, False otherwise
         """
-        return False
+        return result
