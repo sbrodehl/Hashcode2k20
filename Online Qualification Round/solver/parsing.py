@@ -8,22 +8,25 @@ def parse_input(file_in):
     :return: photos, collection
     """
     logging.debug("parsing {}".format(file_in))
-    input_items = []
     with open(file_in, 'r') as f:
         first_line = f.readline().strip()
-        num_books,num_libs,num_days = [int(i) for i in first_line.split()]
+        num_books, num_libs, num_days = [int(i) for i in first_line.split()]
         book_worth = [int(i) for i in f.readline().split()]
         libs = []
         for lib_id in range(num_libs):
-            n_books,signup_time,books_per_day =  [int(i) for i in f.readline().split()]
+            n_books, signup_time, books_per_day = [int(i) for i in f.readline().split()]
             books = set([int(i) for i in f.readline().split()])
-            libs.append({"num_books":n_books,"signup_time":signup_time,"books_per_day":books_per_day,"books":books})
-
+            libs.append({"num_books": n_books,
+                         "signup_time": signup_time,
+                         "books_per_day": books_per_day,
+                         "books": books})
 
     logging.debug("parsing {}: done".format(file_in))
-    return {"num_books":num_books,"num_libs":num_libs,
-            "num_days":num_days,"book_worth":book_worth,
-            "libs":libs}
+    return {"num_books": num_books,
+            "num_libs": num_libs,
+            "num_days": num_days,
+            "book_worth": book_worth,
+            "libs": libs}
 
 
 def parse_output(file_out):
