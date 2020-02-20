@@ -38,16 +38,18 @@ def compute_score(file_in, file_out):
     solution = parse_output(file_out)
     score_ = Score()
     # helper variables
-    _is_book_scanned = [0] * problem['num_books']
+    _is_book_scanned = [False] * problem['num_books']
     _lib_is_signed_up = [False] * problem['num_libs']
     _lib_scan_index = [0] * problem['num_libs']
-    _signup_proc_running = 0
+    _signup_proc_running = -1
     _signup_proc_time_left = 0
     current_day = 0
     while current_day < problem['num_days']:
         for libidx, books in solution:
             # scan books if signed up
             if _lib_is_signed_up[libidx]:
+                if not _lib_scan_index[libidx] < len(books):
+                    continue
                 # get the current book ids to be scanned
                 scanning_books = books[_lib_scan_index[libidx]:
                                        _lib_scan_index[libidx] + problem['libs'][libidx]['books_per_day']]
@@ -58,7 +60,7 @@ def compute_score(file_in, file_out):
                         _is_book_scanned[b] = True
                 _lib_scan_index[libidx] += problem['libs'][libidx]['books_per_day']
             else:
-                if not _signup_proc_running:
+                if _signup_proc_running < 0:
                     # let's sign up that lib
                     _signup_proc_running = libidx
                     _signup_proc_time_left = problem['libs'][libidx]['signup_time']
@@ -68,7 +70,7 @@ def compute_score(file_in, file_out):
         if not _signup_proc_time_left:
             # reset signup process if time evolved
             _lib_is_signed_up[_signup_proc_running] = True
-            _signup_proc_running = 0
+            _signup_proc_running = -1
 
     return score_
 
