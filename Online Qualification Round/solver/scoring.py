@@ -72,6 +72,10 @@ def compute_score(file_in, file_out):
             _lib_is_signed_up[_signup_proc_running] = True
             _signup_proc_running = -1
 
+    # output insights
+    logging.info(f"Submission Insights:")
+    _sign_up_stats = 100 * sum(_lib_is_signed_up) / problem['num_libs']
+    logging.info(f"The library signup has been completed for {sum(_lib_is_signed_up)} out of {problem['num_libs']} libraries ({_sign_up_stats}%).")
     return score_
 
 
