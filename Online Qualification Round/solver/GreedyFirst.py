@@ -6,6 +6,7 @@ class Solver(BaseSolver):
     """
     def __init__(self, input_str):
         super().__init__(input_str)
+        self.sorted_books = list(sorted(list(zip(self.data["book_worth"],range(len(self.data["book_worth"]))))))
 
 
     def get_worth(self,lib_num,days_left,books_used):
@@ -14,8 +15,8 @@ class Solver(BaseSolver):
         num_books_to_scan = (days_left - lib["signup_time"])*lib["books_per_day"]
         if num_books_to_scan<=0:
             return -1,set()
-        scores = [(worth,index) for index,worth in enumerate(self.data["book_worth"]) if index in books_left]
-        scores.sort()
+        scores = [(worth,index) for worth,index in self.sorted_books if index in books_left]
+        #scores.sort()
         scan_books = scores[-1*min(num_books_to_scan,len(scores)):]
         #print(scan_books)
         return sum([i[0] for i in scan_books]),set([i[1] for i in scan_books])
@@ -30,8 +31,8 @@ class Solver(BaseSolver):
         libs_used = set()
         books_used = set()
 
-        while days_left:
-
+        while days_left>0:
+            print(days_left)
             best_lib=-1
             best_score = 0
             for lib in range(self.data["num_libs"]):
