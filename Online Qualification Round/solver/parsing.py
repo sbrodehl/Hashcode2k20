@@ -44,8 +44,12 @@ def parse_output(file_out):
     return solution
 
 
+# solution is a list of tuples of (library_id, [book1, book2, book3, ...])
 def write_output(file_out, solution):
     logging.debug("writing solution {}".format(file_out))
     with open(file_out, 'w') as f:
-        f.write("{}\n".format(str(len(solution))))
-        f.write("{}\n".format(" ".join(list(map(str, solution)))))
+        f.write(f"{len(solution)}\n")
+        for library_id, books in solution:
+            f.write(f"{library_id} {len(books)}\n")
+            f.write(" ".join(books) + "\n")
+
