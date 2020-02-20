@@ -40,10 +40,16 @@ def parse_output(file_out):
     solution = []
     with open(file_out, 'r') as f:
         first_line = f.readline().strip()
-        # tba
-        for sid, line in enumerate(f.readlines()):
-            solution = list(map(int, line.strip().split(' ')))
-            # tba
+        libs_for_signup = int(first_line)
+        for lid in range(libs_for_signup):
+            line = list(map(int, f.readline().strip().split(' ')))
+            assert len(line) == 2
+            lib_id, num_books_to_scan = line[0], line[1]
+            line = list(map(int, f.readline().strip().split(' ')))
+            assert len(line) == num_books_to_scan
+            books_to_scan = line
+            solution.append((lib_id, books_to_scan))
+
     logging.debug("parsing {}: done".format(file_out))
     return solution
 
