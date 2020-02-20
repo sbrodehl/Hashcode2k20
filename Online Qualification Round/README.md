@@ -34,16 +34,29 @@ The problem statement can be found [here](hashcode_2020_online_qualification_rou
 The input files can be found in `input/`
 
 - [example](input/a.txt)
-
+    * books `6`
+    * libraries `2`
+    * time `7`
 - [read on](input/b.txt)
-  
+    * books `100,000`
+    * libraries `100`
+    * time `1,000`
 - [incunabula](input/c.txt)
-  
+    * books `100,000`
+    * libraries `10,000`
+    * time `100,000`
 - [tough choices](input/d.txt)
-  
+    * books `78,600`
+    * libraries `30,000`
+    * time `30,001`
 - [so many books](input/e.txt)
-  
+    * books `100,000`
+    * libraries `1,000`
+    * time `200`  
 - [libraries of the world](input/f.txt)
+    * books `100,000`
+    * libraries `1,000`
+    * time `700`
 
 #### Scoring
 
@@ -59,24 +72,24 @@ Overall **26,644,116** points (681. place).
 
 #### A – example
 
-21 points
+_`21`_ points
 
 #### B – read on
 
-5,822,900 points
+_`5,822,900`_ points
 
 #### C – incunabula
 
-5,645,747 points
+_`5,645,747`_ points
 
 #### D – tough choices
 
-4,836,325 points
+_`4,836,325`_ points
 
 ####  E – so many books
 
-5,142,363 points
+_`5,142,363`_ points
 
 #### F – libraries of the world
 
-5,196,760 points
+_`5,196,760`_ points
