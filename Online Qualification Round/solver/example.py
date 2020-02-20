@@ -14,4 +14,18 @@ class Solver(BaseSolver):
 
         :return: True, if a solution is found, False otherwise
         """
-        return False
+        libraries = sorted(self.data['libs'], key=lambda l: l['signup_time'], reverse=True)
+
+        days_spend = 0
+        while days_spend < self.data['num_days']:
+            if not libraries:
+                break
+            days_left = self.data['num_days'] - days_spend
+            lib = libraries.pop()
+            days_left -= lib['signup_time']
+            if days_left < 0:
+                break
+            books = list(lib['books'])[:days_left * lib['books_per_day']]
+            self.solution.append((lib['lib_id'], books))
+            days_spend += lib['signup_time']
+        return True
