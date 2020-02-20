@@ -33,27 +33,27 @@ The problem statement can be found [here](hashcode_2020_online_qualification_rou
 
 The input files can be found in `input/`
 
-- [example](input/a.txt)
+- [A - example](input/a.txt)
     * books `6`
     * libraries `2`
     * time `7`
-- [read on](input/b.txt)
+- [B - read on](input/b.txt)
     * books `100,000`
     * libraries `100`
     * time `1,000`
-- [incunabula](input/c.txt)
+- [C - incunabula](input/c.txt)
     * books `100,000`
     * libraries `10,000`
     * time `100,000`
-- [tough choices](input/d.txt)
+- [D - tough choices](input/d.txt)
     * books `78,600`
     * libraries `30,000`
     * time `30,001`
-- [so many books](input/e.txt)
+- [E - so many books](input/e.txt)
     * books `100,000`
     * libraries `1,000`
     * time `200`  
-- [libraries of the world](input/f.txt)
+- [F - libraries of the world](input/f.txt)
     * books `100,000`
     * libraries `1,000`
     * time `700`
