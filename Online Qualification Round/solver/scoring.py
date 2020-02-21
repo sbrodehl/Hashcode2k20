@@ -2,6 +2,21 @@ import logging
 import numpy as np
 from .parsing import parse_input, parse_output
 
+LOGGER = logging.getLogger(__name__)
+
+
+class Markup:
+    PURPLE = '\033[95m'
+    CYAN = '\033[96m'
+    DARKCYAN = '\033[36m'
+    BLUE = '\033[94m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+    END = '\033[0m'
+
 
 class Score(object):
     def __init__(self):
@@ -18,12 +33,24 @@ class Score(object):
         self.scores.append(other)
         return self
 
-
-def set_log_level(args):
-    if args.debug:
-        logging.basicConfig(level=logging.DEBUG)
-    else:
-        logging.basicConfig(level=logging.INFO)
+    def print_insights(self):
+        nsghs = self.insights
+        LOGGER.info(f"Submission: {Markup.BOLD}Scoring & Insights{Markup.END}")
+        LOGGER.info(f"Your submission scored {Markup.BOLD}{self.total():,}{Markup.END} points.")
+        LOGGER.info(
+            f"The library signup has been completed for {Markup.BOLD}{nsghs['libs_signed_up']:,} out of"
+            f" {nsghs['num_libs']:,}{Markup.END} libraries ({nsghs['signup_stats']:.2f}%). "
+            f"The last library signup process ended on day {Markup.BOLD}{nsghs['signup_proc_finish_day']:,}{Markup.END}"
+            f" of {nsghs['num_days']:,} days. Library signup took "
+            f"{Markup.BOLD}{nsghs['signup_proc_complete_stats']:,.2f}{Markup.END} days on average.")
+        LOGGER.info(
+            f"A total of {Markup.BOLD}{nsghs['total_scanned_books']:,}{Markup.END} books have been scanned. "
+            f"{Markup.BOLD}{nsghs['unique_scanned_books']:,}{Markup.END} of those books were distinct with an average "
+            f"score of {Markup.BOLD}{nsghs['scanned_book_avg_worth']:,.2f}{Markup.END}. "
+            f"This is {Markup.BOLD}{nsghs['scanned_books_freq']:.2f}%{Markup.END} of the {nsghs['num_books']:,} books"
+            f" available across all libraries. The minimum score of a scanned book was "
+            f"{Markup.BOLD}{nsghs['scanned_book_worth_min']:,}{Markup.END} and the maximum score of a scanned "
+            f"book was {Markup.BOLD}{nsghs['scanned_book_worth_max']:,}{Markup.END}.")
 
 
 def compute_score(file_in, file_out):
