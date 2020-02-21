@@ -7,6 +7,7 @@ from .parsing import parse_input, parse_output
 class Score(object):
     def __init__(self):
         self.scores = []
+        self.insights = {}
 
     def total(self):
         return np.array(self.scores).sum()
@@ -75,36 +76,23 @@ def compute_score(file_in, file_out):
             _signup_proc_running = -1
             _signup_proc_last_complete = current_day - 1
 
-    # output insights
-    logging.info(f"")
-    logging.info(f"Submission Insights:")
-    _sign_up_stats = 100 * sum(_lib_is_signed_up) / problem['num_libs']
-    logging.info(f"\tThe library signup has been completed for {sum(_lib_is_signed_up)} out of {problem['num_libs']} libraries ({_sign_up_stats:.2f}%).")
-    logging.info(f"\tThe last library signup process ended on day {_signup_proc_last_complete} of {problem['num_days']} days.")
-    _signup_proc_complete_stats = sum([problem['libs'][idx]['signup_time'] for idx, is_signed_up in enumerate(_lib_is_signed_up) if is_signed_up]) / sum(_lib_is_signed_up)
-    logging.info(f"\tLibrary signup took {_signup_proc_complete_stats:.2f} days on average.")
-    logging.info(f"\tA total of {_total_scanned} books have been scanned.")
-    _scanned_book_worths = [problem['book_worth'][idx] for idx, is_scanned in enumerate(_is_book_scanned) if is_scanned]
-    _scanned_book_avg_worth = sum(_scanned_book_worths) / len(_scanned_book_worths)
-    logging.info(f"\t{sum(_is_book_scanned)} of those books were distinct with an average score of {_scanned_book_avg_worth:.2f}.")
-    _scanned_books_perc = 100 * sum(_is_book_scanned) / problem['num_books']
-    logging.info(f"\tThis is {_scanned_books_perc:.2f}% of the {problem['num_books']} books available across all libraries.")
-    _scanned_book_worth_min, _scanned_book_worth_max = min(_scanned_book_worths), max(_scanned_book_worths)
-    logging.info(f"\tThe minimum score of a scanned book was {_scanned_book_worth_min} and the maximum score of a scanned book was {_scanned_book_worth_max}.")
+    # aux vars
+    _scanned_book_worth = [problem['book_worth'][idx] for idx, is_scanned in enumerate(_is_book_scanned) if is_scanned]
+    _insights = {
+        'libs_signed_up': sum(_lib_is_signed_up),
+        'signup_stats': 100 * sum(_lib_is_signed_up) / problem['num_libs'],
+        'signup_proc_finish_day': _signup_proc_last_complete,
+        'signup_proc_complete_stats': sum([problem['libs'][idx]['signup_time'] for idx, is_signed_up in enumerate(_lib_is_signed_up) if is_signed_up]) / sum(_lib_is_signed_up),
+        'total_scanned_books': _total_scanned,
+        'unique_scanned_books': sum(_is_book_scanned),
+        'scanned_book_worth': _scanned_book_worth,
+        'scanned_book_avg_worth': sum(_scanned_book_worth) / len(_scanned_book_worth),
+        'scanned_book_worth_min': min(_scanned_book_worth),
+        'scanned_book_worth_max': max(_scanned_book_worth),
+        'scanned_books_freq': 100 * sum(_is_book_scanned) / problem['num_books'],
+        'num_days': problem['num_days'],
+        'num_libs': problem['num_libs'],
+        'num_books': problem['num_books'],
+    }
+    score_.insights = _insights
     return score_
-
-
-if __name__ == '__main__':
-    import argparse
-
-    parser = argparse.ArgumentParser(description='print score', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('file_in', type=str, help='input file e.g. a_example.in')
-    parser.add_argument('file_out', type=str, help='output file e.g. a_example.out')
-    parser.add_argument('--debug', action='store_true', help='set debug level')
-    args = parser.parse_args()
-
-    set_log_level(args)
-
-    score = compute_score(args.file_in, args.file_out)
-    total = score.total()
-    logging.info(f"Your submission ({args.file_out}) scored {total} points.")
