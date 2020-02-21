@@ -1,3 +1,5 @@
+import importlib
+import importlib.util
 import pkgutil
 from pathlib import Path
 
@@ -14,7 +16,6 @@ def get_available_solver(dirname, baseclass):
 
 
 if __name__ == '__main__':
-    import importlib
     import argparse
     import logging
 
