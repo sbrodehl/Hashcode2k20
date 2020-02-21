@@ -1,6 +1,5 @@
 from .parsing import parse_input, write_output
 from .scoring import compute_score
-import logging
 
 
 class BaseSolver(object):
