@@ -1,3 +1,18 @@
+import pkgutil
+from pathlib import Path
+
+
+def get_available_solver(dirname, baseclass):
+    _dotmod = importlib.util.find_spec(Path(dirname).name)
+    for (module_loader, name, ispkg) in pkgutil.iter_modules([dirname]):
+        try:
+            importlib.import_module('.' + name, _dotmod.name)
+        except ModuleNotFoundError:
+            pass
+    _classes = {str(cls.__name__).lower(): cls for cls in baseclass.__subclasses__()}
+    return [str(_cls).lower() for _cls in _classes], _classes
+
+
 if __name__ == '__main__':
     import importlib
     import argparse
@@ -16,6 +31,8 @@ if __name__ == '__main__':
         END = '\033[0m'
 
     parser = argparse.ArgumentParser()
+
+    methods, classes = get_available_solver("solver", importlib.import_module("solver.basesolver").BaseSolver)
 
     # need to be
     parser.add_argument("input", help="input file")
