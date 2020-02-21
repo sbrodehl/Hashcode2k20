@@ -32,7 +32,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
 
-    methods, classes = get_available_solver("solver", importlib.import_module("solver.basesolver").BaseSolver)
+    cls_names, classes = get_available_solver("solver", importlib.import_module("solver.basesolver").BaseSolver)
 
     # need to be
     parser.add_argument("input", help="input file")
