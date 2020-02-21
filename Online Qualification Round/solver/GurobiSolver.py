@@ -3,7 +3,7 @@ import numpy as np
 import gurobipy
 from IPython import embed
 
-class Solver(BaseSolver):
+class GurobiSolver(BaseSolver):
     def __init__(self, input_str):
         super().__init__(input_str)
         self.signup_time = np.array([lib['signup_time'] for lib in self.data['libs']])

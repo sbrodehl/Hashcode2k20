@@ -1,7 +1,7 @@
 from .basesolver import BaseSolver
 
 
-class Solver(BaseSolver):
+class Example2(BaseSolver):
     """Solve the problem nice and steady!
     """
     def __init__(self, input_str):
