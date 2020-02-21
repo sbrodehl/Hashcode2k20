@@ -31,21 +31,21 @@ if __name__ == '__main__':
         logging.basicConfig(level=logging.DEBUG)
     else:
         logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger(__name__)
+    LOGGER = logging.getLogger(__name__)
 
     if args.score:
         scoring = importlib.import_module('.'.join(["solver", "scoring"]))
         score = scoring.compute_score(args.input, args.output)
         nsghs = score.insights
-        logger.info(f"Submission: {Markup.BOLD}Scoring & Insights{Markup.END}")
-        logger.info(f"Your submission scored {Markup.BOLD}{score.total():,}{Markup.END} points.")
-        logger.info(
+        LOGGER.info(f"Submission: {Markup.BOLD}Scoring & Insights{Markup.END}")
+        LOGGER.info(f"Your submission scored {Markup.BOLD}{score.total():,}{Markup.END} points.")
+        LOGGER.info(
             f"The library signup has been completed for {Markup.BOLD}{nsghs['libs_signed_up']:,} out of"
             f" {nsghs['num_libs']:,}{Markup.END} libraries ({nsghs['signup_stats']:.2f}%). "
             f"The last library signup process ended on day {Markup.BOLD}{nsghs['signup_proc_finish_day']:,}{Markup.END}"
             f" of {nsghs['num_days']:,} days. Library signup took "
             f"{Markup.BOLD}{nsghs['signup_proc_complete_stats']:,.2f}{Markup.END} days on average.")
-        logger.info(
+        LOGGER.info(
             f"A total of {Markup.BOLD}{nsghs['total_scanned_books']:,}{Markup.END} books have been scanned. "
             f"{Markup.BOLD}{nsghs['unique_scanned_books']:,}{Markup.END} of those books were distinct with an average "
             f"score of {Markup.BOLD}{nsghs['scanned_book_avg_worth']:,.2f}{Markup.END}. "
