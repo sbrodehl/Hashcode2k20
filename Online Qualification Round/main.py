@@ -27,6 +27,12 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
+    if args.debug:
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
+
     solver = None
     # try load the given solver
     try:
