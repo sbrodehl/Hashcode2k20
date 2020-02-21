@@ -5,10 +5,10 @@ from pathlib import Path
 
 
 def get_available_solver(dirname, baseclass):
-    _dotmod = importlib.util.find_spec(Path(dirname).name)
-    for (module_loader, name, ispkg) in pkgutil.iter_modules([dirname]):
+    spec = importlib.util.find_spec(Path(dirname).name)
+    for (_, name, _) in pkgutil.iter_modules([dirname]):
         try:
-            importlib.import_module('.' + name, _dotmod.name)
+            importlib.import_module(f'.{name}', spec.name)
         except ModuleNotFoundError:
             pass
     _classes = {str(cls.__name__).lower(): cls for cls in baseclass.__subclasses__()}
@@ -40,7 +40,7 @@ if __name__ == '__main__':
     LOGGER = logging.getLogger(__name__)
 
     if args.score:
-        scoring = importlib.import_module('.'.join(["solver", "scoring"]))
+        scoring = importlib.import_module("solver.scoring")
         score = scoring.compute_score(args.input, args.output)
         score.print_insights()
         exit(0)
