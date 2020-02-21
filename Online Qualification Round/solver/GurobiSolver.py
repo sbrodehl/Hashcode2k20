@@ -6,7 +6,7 @@ import zlib
 
 
 class GurobiSolver(BaseSolver):
-    def __init__(self, input_str, dtype=np.int64):
+    def __init__(self, input_str, dtype=np.int64): # int64 required to prevent overflows
         super().__init__(input_str)
 
         # store some library data as numpy array for faster processing
@@ -25,6 +25,8 @@ class GurobiSolver(BaseSolver):
         return weights, bookset
 
     def lib_worth(self, lib, book_worth, remaining_days, update_book_worth=False):
+        # calculate maximum worth of scanned books for a library, taking into account
+        # the number of days remaining and which books are already scanned by another library
         max_books = max(0, remaining_days - lib['signup_time']) * lib['books_per_day']
         use_books = sorted(lib['books'], key=lambda x: book_worth[x], reverse=True)[:max_books]
         sum_worth = sum(book_worth[use_books])
@@ -32,31 +34,43 @@ class GurobiSolver(BaseSolver):
         return sum_worth
 
     def lib_heuristic(self, lib, *args, **kwargs):
+        # worth divided by signup_time as heuristic, if identical, prefer libs with lower signup time
         worth = self.lib_worth(lib, *args, **kwargs)
-        return (worth / lib['signup_time'], -lib['signup_time']) # take lib with lowest signup time if same worth
+        return (worth / lib['signup_time'], -lib['signup_time'])
 
     def sort_libs_greedy(self):
         print('greedy library selection (days_remain>min_worth):', end='', flush=True)
         cache_fn = f'cache_{abs(self.data_hash)}.npy'
+
         try:
+            # load from cache file if possible, as the calculation is not optimized and can take long
             order = np.load(cache_fn)
             print(' recovered from cache')
+
         except:
             order = []
             unused = dict(enumerate(self.data['libs']))
             book_worth = np.copy(self.book_worth)
             remaining_days = self.data['num_days']
             min_worth = 0
+
             while unused and remaining_days>0:
+                # greedy selection of next library
                 order.append(max(unused.items(), key=lambda x:self.lib_heuristic(x[1], book_worth, remaining_days))[0])
                 lib = unused.pop(order[-1])
+
+                # update remaining_days and worth of scanned books
                 remaining_days -= lib['signup_time']
                 min_worth += self.lib_worth(lib, book_worth, remaining_days, update_book_worth=True)
+
                 if remaining_days>0: print(f' {remaining_days}>{min_worth}', end='', flush=True)
-                else: order.pop()
+                else: order.pop() # remove library if there is no time to scan any books
+
             print()
+
             try: np.save(cache_fn, order)
             except: pass
+
         return np.array(order)
 
     def solve(self):
