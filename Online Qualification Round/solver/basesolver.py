@@ -26,6 +26,4 @@ class BaseSolver(object):
     def write(self, output_str):
         write_output(output_str, self.solution)
         s = compute_score(self.input_str, output_str)
-        total = s.total()
-        s.total()
-        logging.info(f"Your submission ({self.input_str}) scored {total} points.")
+        s.print_insights()
