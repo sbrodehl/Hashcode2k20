@@ -9,9 +9,12 @@ if __name__ == '__main__':
 
     # need to be
     parser.add_argument("input", help="input file")
-
     parser.add_argument("--output", help="output file")
-    parser.add_argument("--solver", type=str, default="example")
+    parser.add_argument('--debug', action='store_true', help='set debug level')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("--solver", type=str, default="example")
+    group.add_argument('--score', action='store_true')
+
     args = parser.parse_args()
 
     solver = None
