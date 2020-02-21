@@ -44,17 +44,10 @@ if __name__ == '__main__':
         score.print_insights()
         exit(0)
 
-    solver = None
-    # try load the given solver
-    try:
-        solver = importlib.import_module('.'.join(["solver", args.solver]))
-    except ImportError as e:
-        parser.print_help()
-        print(e)
-        exit(1)
-
+    # get the chosen solver
+    solver = classes[args.solver]
     # solver init with filepath
-    solver = solver.Solver(args.input)
+    solver = solver(args.input)
 
     # solve the problem with given input
     success = solver.solve()
