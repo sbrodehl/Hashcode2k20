@@ -4,7 +4,8 @@ import gurobipy
 import time
 import zlib
 
-class Solver(BaseSolver):
+
+class GurobiSolver(BaseSolver):
     def __init__(self, input_str, dtype=np.int64):
         super().__init__(input_str)
 
