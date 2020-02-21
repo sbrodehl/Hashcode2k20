@@ -48,7 +48,12 @@ The input files can be found in `input/`
 
 #### Scoring
 
-tba
+The score for each data set is the sum of the scores of all books that are scanned within the available days.
+Note that if the same book is shipped from multiple libraries, the score for the book will be awarded only once.
+
+The final score will be the sum of the scores for the individual data sets.
+
+See the section on scoring in the [Problem statement for the Online Qualification Round of Hash Code 2020](hashcode_2020_online_qualification_round.pdf) for more details.
 
 ## Algorithm
 
