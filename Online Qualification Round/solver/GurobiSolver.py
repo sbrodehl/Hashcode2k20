@@ -86,12 +86,13 @@ class GurobiSolver(BaseSolver):
                     #a = np.random.randint(max(0, b - 100), b)
 
                     # adjacent swaps
-                    b = max(1, (b+1) % len(order)); a = b-1
+                    b = max(1, (b+1) % len(order)); a = max(0, b-1)
 
                     order[a], order[b] = order[b], order[a]
                     print(f'swap {a}<>{b}: ', end='')
                     new_result = self.fixed_order_optimal_solve(order)
                     if new_result['value']>result['value']:
+                        b -= 2
                         print(f'NEW BEST VALUE: {result["value"]} -> {new_result["value"]}')
                         result = new_result
                         np.save(self.cache_file, result['order'])
