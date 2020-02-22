@@ -3,14 +3,18 @@ import numpy as np
 import gurobipy
 import time
 import zlib
-
+from IPython import embed
 
 class GurobiSolver(BaseSolver):
-    def __init__(self, input_str, dtype=np.int64): # int64 required to prevent overflows
+    def __init__(self, input_str, improve=True, dtype=np.int64): # int64 required to prevent overflows
         super().__init__(input_str)
+        self.improve = improve
+
+        # caching of best solution
+        self.data_hash = zlib.adler32(str(self.data).encode('utf-8'))
+        self.cache_file = cache_fn = f'cache_{abs(self.data_hash)}.npy'
 
         # store some library data as numpy array for faster processing
-        self.data_hash = zlib.adler32(str(self.data).encode('utf-8'))
         self.signup_time = np.array([lib['signup_time'] for lib in self.data['libs']], dtype=dtype)
         self.books_per_day = np.array([lib['books_per_day'] for lib in self.data['libs']], dtype=dtype)
         self.book_worth = np.array(self.data['book_worth'], dtype=dtype)
@@ -40,42 +44,59 @@ class GurobiSolver(BaseSolver):
 
     def sort_libs_greedy(self):
         print('greedy library selection (days_remain>min_worth):', end='', flush=True)
-        cache_fn = f'cache_{abs(self.data_hash)}.npy'
+        order = []
+        unused = dict(enumerate(self.data['libs']))
+        book_worth = np.copy(self.book_worth)
+        remaining_days = self.data['num_days']
+        min_worth = 0
 
-        try:
-            # load from cache file if possible, as the calculation is not optimized and can take long
-            order = np.load(cache_fn)
-            print(' recovered from cache')
+        while unused and remaining_days>0:
+            # greedy selection of next library
+            order.append(max(unused.items(), key=lambda x:self.lib_heuristic(x[1], book_worth, remaining_days))[0])
+            lib = unused.pop(order[-1])
 
-        except:
-            order = []
-            unused = dict(enumerate(self.data['libs']))
-            book_worth = np.copy(self.book_worth)
-            remaining_days = self.data['num_days']
-            min_worth = 0
+            # update remaining_days and worth of scanned books
+            remaining_days -= lib['signup_time']
+            min_worth += self.lib_worth(lib, book_worth, remaining_days, update_book_worth=True)
 
-            while unused and remaining_days>0:
-                # greedy selection of next library
-                order.append(max(unused.items(), key=lambda x:self.lib_heuristic(x[1], book_worth, remaining_days))[0])
-                lib = unused.pop(order[-1])
+            if remaining_days>0: print(f' {remaining_days}>{min_worth}', end='', flush=True)
+            else: order.pop() # remove library if there is no time to scan any books
 
-                # update remaining_days and worth of scanned books
-                remaining_days -= lib['signup_time']
-                min_worth += self.lib_worth(lib, book_worth, remaining_days, update_book_worth=True)
-
-                if remaining_days>0: print(f' {remaining_days}>{min_worth}', end='', flush=True)
-                else: order.pop() # remove library if there is no time to scan any books
-
-            print()
-
-            try: np.save(cache_fn, order)
-            except: pass
-
+        print()
         return np.array(order)
 
     def solve(self):
-        self.order = self.sort_libs_greedy()
-        result = self.fixed_order_optimal_solve(self.order)
+        try: # load from cache file if possible, as the calculation is not optimized and can take long
+            order = np.load(self.cache_file); print('order recovered from cache')
+        except: # use greedy library selection as starting point
+            order = self.sort_libs_greedy()
+            try: np.save(self.cache_file, order)
+            except: pass
+
+        result = self.fixed_order_optimal_solve(order)
+
+        a = b = 0
+        while self.improve:
+            try:
+                while self.improve:
+                    order = np.copy(result['order'])
+
+                    # random swaps
+                    #b = np.random.randint(1, len(order))
+                    #a = np.random.randint(max(0, b - 100), b)
+
+                    # adjacent swaps
+                    b = max(1, (b+1) % len(order)); a = b-1
+
+                    order[a], order[b] = order[b], order[a]
+                    print(f'swap {a}<>{b}: ', end='')
+                    new_result = self.fixed_order_optimal_solve(order)
+                    if new_result['value']>result['value']:
+                        print(f'NEW BEST VALUE: {result["value"]} -> {new_result["value"]}')
+                        result = new_result
+                        np.save(self.cache_file, result['order'])
+            except KeyboardInterrupt: embed() # open interactive shell
+
         self.solution = self.extract_solution(result)
         return True
 
@@ -89,11 +110,11 @@ class GurobiSolver(BaseSolver):
         start = time.time()
 
         # store order for solution extraction
-        run_data = {'order': order.copy()}
+        run_data = {'order': np.copy(order)}
 
         # init model
         run_data['model'] = m = gurobipy.Model()
-        print('Optimal solver: build model...', end='', flush=True)
+        print('Build model...', end='', flush=True)
         weights, bookset = (self.weights, self.bookset) if use_full_model else self.build_weights_and_bookset(order)
         print(f' {len(weights)} vars...', end='', flush=True)
 
