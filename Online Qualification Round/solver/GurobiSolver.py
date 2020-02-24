@@ -5,8 +5,9 @@ import time
 import zlib
 from IPython import embed
 
+
 class GurobiSolver(BaseSolver):
-    def __init__(self, input_str, improve=True, dtype=np.int64): # int64 required to prevent overflows
+    def __init__(self, input_str, improve=True, dtype=np.int64):  # int64 required to prevent overflows
         super().__init__(input_str)
         self.improve = improve
 
@@ -24,8 +25,8 @@ class GurobiSolver(BaseSolver):
 
     def build_weights_and_bookset(self, libs=None):
         if libs is None: libs = range(self.data['num_libs'])
-        weights = {(l,p,b): self.data['book_worth'][b] for l in libs for p,b in enumerate(self.data['libs'][l]['books'])}
-        bookset = set([b for l,p,b in weights])
+        weights = {(l, p, b): self.data['book_worth'][b] for l in libs for p, b in enumerate(self.data['libs'][l]['books'])}
+        bookset = set([b for l, p, b in weights])
         return weights, bookset
 
     def lib_worth(self, lib, book_worth, remaining_days, update_book_worth=False):
@@ -40,7 +41,7 @@ class GurobiSolver(BaseSolver):
     def lib_heuristic(self, lib, *args, **kwargs):
         # worth divided by signup_time as heuristic, if identical, prefer libs with lower signup time
         worth = self.lib_worth(lib, *args, **kwargs)
-        return (worth / lib['signup_time'], -lib['signup_time'])
+        return worth / lib['signup_time'], -lib['signup_time']
 
     def sort_libs_greedy(self):
         print('greedy library selection (days_remain>min_worth):', end='', flush=True)
@@ -59,16 +60,16 @@ class GurobiSolver(BaseSolver):
             remaining_days -= lib['signup_time']
             min_worth += self.lib_worth(lib, book_worth, remaining_days, update_book_worth=True)
 
-            if remaining_days>0: print(f' {remaining_days}>{min_worth}', end='', flush=True)
-            else: order.pop() # remove library if there is no time to scan any books
+            if remaining_days > 0 : print(f' {remaining_days}>{min_worth}', end='', flush=True)
+            else: order.pop()  # remove library if there is no time to scan any books
 
         print()
         return np.array(order)
 
     def solve(self):
-        try: # load from cache file if possible, as the calculation is not optimized and can take long
+        try:  # load from cache file if possible, as the calculation is not optimized and can take long
             order = np.load(self.cache_file); print('order recovered from cache')
-        except: # use greedy library selection as starting point
+        except:  # use greedy library selection as starting point
             order = self.sort_libs_greedy()
             try: np.save(self.cache_file, order)
             except: pass
@@ -143,7 +144,7 @@ class GurobiSolver(BaseSolver):
         # constraint: each book can be scanned only once
         print(f' {len(bookset)} book_cs...', end='', flush=True)
         for b in bookset:
-            m.addConstr(x.sum('*','*',b) <= 1)
+            m.addConstr(x.sum('*', '*', b) <= 1)
 
         # optimize, return result
         print(' solve...', end='', flush=True)
@@ -153,7 +154,7 @@ class GurobiSolver(BaseSolver):
         return run_data
 
     def extract_solution(self, run_data):
-        solution = [[i,[]] for i in range(self.data['num_libs'])]
+        solution = [[i, []] for i in range(self.data['num_libs'])]
         for (i, j, b), v in run_data['vars'].items():
-            if v.x>0.9: solution[i][1].append(b)
+            if v.x > 0.9: solution[i][1].append(b)
         return [solution[i] for i in run_data['order'] if solution[i][1]]
