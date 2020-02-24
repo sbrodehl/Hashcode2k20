@@ -78,27 +78,31 @@ class GurobiSolver(BaseSolver):
         result = self.fixed_order_optimal_solve(order)
 
         a = b = 0
+        the_final_countdown = self.data['num_libs']**2
+
         while self.improve:
             try:
                 while self.improve:
                     order = np.copy(result['order'])
 
-                    # random swaps
-                    #b = np.random.randint(1, len(order))
-                    #a = np.random.randint(max(0, b - 100), b)
-
                     # adjacent swaps
                     b = max(1, (b+1) % len(order)); a = max(0, b-1)
 
                     order[a], order[b] = order[b], order[a]
-                    print(f'swap {a}<>{b}: ', end='')
+                    print(f' swap {a}<>{b}: ', end='')
                     new_result = self.fixed_order_optimal_solve(order)
-                    if new_result['value']>result['value']:
+                    if new_result['value'] > result['value']:
                         b -= 2
                         print(f'NEW BEST VALUE: {result["value"]} -> {new_result["value"]}')
                         result = new_result
                         np.save(self.cache_file, result['order'])
-            except KeyboardInterrupt: embed() # open interactive shell
+                        the_final_countdown = self.data['num_libs']**2  # reset the chains
+                    else:
+                        the_final_countdown -= 1
+                        if the_final_countdown <= 0:
+                            self.improve = False
+                            break  # free from the chains!
+            except KeyboardInterrupt: embed()  # open interactive shell
 
         self.solution = self.extract_solution(result)
         return True
