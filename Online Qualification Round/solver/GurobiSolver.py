@@ -3,6 +3,7 @@ import numpy as np
 import gurobipy
 import time
 import zlib
+from pathlib import Path
 from IPython import embed
 
 
@@ -13,7 +14,7 @@ class GurobiSolver(BaseSolver):
 
         # caching of best solution
         self.data_hash = zlib.adler32(str(self.data).encode('utf-8'))
-        self.cache_file = cache_fn = f'cache_{abs(self.data_hash)}.npy'
+        self.cache_file = cache_fn = Path("output") / f'cache_{abs(self.data_hash)}.npy'
 
         # store some library data as numpy array for faster processing
         self.signup_time = np.array([lib['signup_time'] for lib in self.data['libs']], dtype=dtype)
