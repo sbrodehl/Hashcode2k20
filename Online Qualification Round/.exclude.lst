@@ -1,0 +1,9 @@
+output/*
+input/*
+*.png
+*.pdf
+*.md
+*.npy
+*.lst
+*.html
+*__pycache__*
