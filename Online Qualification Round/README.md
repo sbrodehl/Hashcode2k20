@@ -31,20 +31,55 @@ The problem statement can be found [here](hashcode_2020_online_qualification_rou
 
 #### Input
 
-The input files can be found in `input/`
+The input files can be found in [`input/`](input)
 
 - [A - example](input/a.txt)  
-    Books: `6` Libraries: `2` Time: `7`
+    Books: **6** Libraries: **2** Time: **7**  
+    The minimum count of a book is **1** and the maximum count of a book is **2**.  
+    On average a book appears **1.50 ± 0.50** times.  
+    There are **0** books which do not exist in libraries (0.00%).  
+    The minimum score of an existing book is **1** and the maximum score of an existing book is **6**.  
+    The signup of all libraries takes **5** days, which is **71.43%** of all 7 days.
+
 - [B - read on](input/b.txt)  
-    Books: `100,000` Libraries: `100` Time: `1,000`
+    Books: **100,000** Libraries: **100** Time: **1,000**  
+    The minimum count of a book is **1** and the maximum count of a book is **1**.  
+    On average a book appears **1.00 ± 0.00** times.  
+    There are **0** books which do not exist in libraries (0.00%).  
+    The minimum score of an existing book is **100** and the maximum score of an existing book is **100**.  
+    The signup of all libraries takes **1,181** days, which is **118.10%** of all 1,000 days.
+
 - [C - incunabula](input/c.txt)  
-    Books: `100,000` Libraries: `10,000` Time: `100,000`
+    Books: **100,000** Libraries: **10,000** Time: **100,000**  
+    The minimum count of a book is **0** and the maximum count of a book is **9**.  
+    On average a book appears **1.50 ± 1.23** times.  
+    There are **22,340** books which do not exist in libraries (22.34%).  
+    The minimum score of an existing book is **1** and the maximum score of an existing book is **600**.  
+    The signup of all libraries takes **5,060,797** days, which is **5,060.80%** of all 100,000 days.  
+
 - [D - tough choices](input/d.txt)  
-    Books: `78,600` Libraries: `30,000` Time: `30,001`
+    Books: **78,600** Libraries: **30,000** Time: **30,001**  
+    The minimum count of a book is **2** and the maximum count of a book is **3**.  
+    On average a book appears **2.81 ± 0.39** times.  
+    There are **0** books which do not exist in libraries (0.00%).  
+    The minimum score of an existing book is **65** and the maximum score of an existing book is **65**.  
+    The signup of all libraries takes **60,000** days, which is **199.99%** of all 30,001 days.
+
 - [E - so many books](input/e.txt)  
-    Books: `100,000` Libraries: `1,000` Time: `200`  
+    Books: **100,000** Libraries: **1,000** Time: **200**  
+    The minimum count of a book is **0** and the maximum count of a book is **18**.  
+    On average a book appears **4.92 ± 2.21** times.  
+    There are **736** books which do not exist in libraries (0.74%).  
+    The minimum score of an existing book is **1** and the maximum score of an existing book is **250**.  
+    The signup of all libraries takes **5,432** days, which is **2,716.00%** of all 200 days.
+
 - [F - libraries of the world](input/f.txt)  
-    Books: `100,000` Libraries: `1,000` Time: `700`
+    Books: **100,000** Libraries: **1,000** Time: **700**  
+    The minimum count of a book is **0** and the maximum count of a book is **17**.  
+    On average a book appears **5.09 ± 2.25** times.  
+    There are **575** books which do not exist in libraries (0.57%).  
+    The minimum score of an existing book is **1** and the maximum score of an existing book is **800**.  
+    The signup of all libraries takes **166,192** days, which is **23,741.71%** of all 700 days.
 
 #### Scoring
 
