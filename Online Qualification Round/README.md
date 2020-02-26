@@ -96,7 +96,7 @@ tba
 
 ## Scores
 
-Overall **26,644,116** points (681. place).
+Overall **26,644,116** points (681st place).
 
 #### A – example
 
