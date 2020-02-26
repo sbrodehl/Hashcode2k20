@@ -40,6 +40,7 @@ class Statistics(BaseSolver):
         book_stat_count_mean_std = np.std(books)
         lib_signup_freq = 100.0 * signup_sum / self.data['num_days']
 
+        book_stat_worth_sum = np.array(self.data['book_worth']).sum()
         book_stat_worth_sel = np.array(self.data['book_worth'])[books.astype(bool).astype(int) > 0]
         book_stat_worth_min = np.min(book_stat_worth_sel)
         book_stat_worth_max = np.max(book_stat_worth_sel)
@@ -50,6 +51,7 @@ class Statistics(BaseSolver):
                     f"Libraries: {Markup.BOLD}{self.data['num_libs']:,}{Markup.END} "
                     f"Time: {Markup.BOLD}{self.data['num_days']:,}{Markup.END}")
 
+        LOGGER.info(f"The score of all books is {Markup.BOLD}{book_stat_worth_sum:,}{Markup.END}.")
         LOGGER.info(f"The minimum count of a book is {Markup.BOLD}{book_stat_count_min:,}{Markup.END} and "
                     f"the maximum count of a book is {Markup.BOLD}{book_stat_count_max:,}{Markup.END}.")
         LOGGER.info(f"On average a book appears {Markup.BOLD}{book_stat_count_mean:.2f} "
